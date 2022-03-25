@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="226.0" prefWidth="422.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button id="kunde" layoutX="53.0" layoutY="138.0" mnemonicParsing="false" text="Kunde" />
+      <Button alignment="TOP_LEFT" contentDisplay="BOTTOM" layoutX="167.0" layoutY="138.0" mnemonicParsing="false" text="Planlegger" />
+      <Button alignment="BOTTOM_RIGHT" layoutX="297.0" layoutY="138.0" mnemonicParsing="false" text="Kinobetjent" />
+      <Label layoutX="142.0" layoutY="42.0" prefHeight="35.0" prefWidth="141.0" text="Hovedmeny">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
