@@ -6,11 +6,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="423.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane onDragOver="#visKinoprogram" prefHeight="550.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Grensesnitt.Controller">
    <children>
-      <Label layoutX="198.0" layoutY="47.0" text="Kunde">
+      <Label layoutX="269.0" layoutY="36.0" text="Kunde">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
+      <Button layoutX="46.0" layoutY="488.0" mnemonicParsing="false" onAction="#tilbake" text="Tilbake" />
+      <Button layoutX="515.0" layoutY="488.0" mnemonicParsing="false" text="Book" />
+      <TableView fx:id="tabell" layoutX="56.0" layoutY="155.0" onSort="#visKinoprogram" prefHeight="313.0" prefWidth="500.0">
+        <columns>
+          <TableColumn fx:id="col_kinosalnr" prefWidth="100.0" text="Kinosalnr" />
+          <TableColumn fx:id="col_dato" prefWidth="100.0" text="Dato" />
+            <TableColumn fx:id="col_tidspunkt" prefWidth="100.0" text="Tidspunkt" />
+            <TableColumn fx:id="col_pris" prefWidth="100.0" text="Pris" />
+            <TableColumn fx:id="col_film" prefWidth="100.0" text="Film" />
+        </columns>
+      </TableView>
+      <MenuButton layoutX="56.0" layoutY="98.0" mnemonicParsing="false" text="Velg film">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
+      <DatePicker layoutX="338.0" layoutY="98.0" />
    </children>
 </AnchorPane>
