@@ -10,15 +10,16 @@ import javafx.scene.Scene;
 
 public class Main extends Application {
 	Parent rot;
-	Stage primaryStage;
+	Controller control;
+	Stage stage;
 	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
 		try {
 			rot = FXMLLoader.load(getClass().getResource("HovedVindu.fxml"));
-			primaryStage.setTitle("Kino");
-			primaryStage.setScene(new Scene(rot));
-			primaryStage.show();
+			stage.setTitle("Kino");
+			stage.setScene(new Scene(rot));
+			stage.show();
 			
 			
 		} catch(Exception e) {
@@ -31,6 +32,6 @@ public class Main extends Application {
 	}
 }
 
-// Du ser det her nå
+
 
 
