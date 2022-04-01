@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
@@ -45,6 +47,18 @@ public class KundeController {
 	
 	@FXML
 	private Button tilbake;
+	
+	@FXML
+	private Button lastvalgtdato;
+	
+	@FXML
+	private DatePicker datovelger;
+	
+	@FXML
+	private DatePicker datoValgt;
+	
+	@FXML
+	private LocalDate dato;
 	
 	@FXML
 	private TableColumn<Kino, Integer> colkinosal;
@@ -110,6 +124,38 @@ public class KundeController {
 		tabell.setItems(list);
 	}
 	
+	public ObservableList<Kino> hentInnholdDato() throws Exception {
+		ObservableList<Kino> data = FXCollections.observableArrayList();
+		kontroll.lagForbindelse();
+		dato = datoValgt.getValue();
+		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblvisning.v_dato = '"+ dato +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
+		Statement utsagn;
+        ResultSet resultat;
+		try {
+			utsagn = kontroll.forbindelse.createStatement();
+			resultat = utsagn.executeQuery(sql);
+			Kino kino;
+			while(resultat.next()) {
+				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"));
+                data.add(kino);
+                }
+		} catch (SQLException e2) {System.out.println(e2);}
+		return data;
+		
+	}
+	
+	        
+	
+	@FXML
+	public void brukInnholdDato(ActionEvent e) throws Exception{
+		ObservableList<Kino> list = hentInnholdDato();
+		colkinosal.setCellValueFactory(new PropertyValueFactory<Kino, Integer>("Kinosalnr"));
+		coldato.setCellValueFactory(new PropertyValueFactory<Kino, Date>("Dato"));
+		coltidspunkt.setCellValueFactory(new PropertyValueFactory<Kino, Time>("Starttid"));
+		colpris.setCellValueFactory(new PropertyValueFactory<Kino, Double>("Pris"));
+		colfilm.setCellValueFactory(new PropertyValueFactory<Kino, String>("Film"));
+		tabell.setItems(list);
+	}
 	
 
 }
