@@ -1,4 +1,4 @@
-package Grensesnitt;
+package application;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,29 +9,20 @@ import javafx.scene.Scene;
 
 
 public class Main extends Application {
-	Parent rot;
+	Parent hovedvindu;
 	Controller control;
 	Stage stage;
 	
 	@Override
-	public void start(Stage stage) {
-		try {
-			rot = FXMLLoader.load(getClass().getResource("HovedVindu.fxml"));
-			stage.setTitle("Kino");
-			stage.setScene(new Scene(rot));
-			stage.show();
-			
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void start(Stage stage) throws Exception {
+		Parent hovedvindu = FXMLLoader.load(getClass().getResource("scene1.fxml"));
+		Scene scene1 = new Scene(hovedvindu);
+		stage.setScene(scene1);
+		stage.show();
+		
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
 }
-
-
-
-

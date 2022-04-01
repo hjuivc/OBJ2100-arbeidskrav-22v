@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.KundeController">
+   <children>
+      <Label id="overskrift" layoutX="167.0" layoutY="14.0" text="Kundevindu">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="10.0" layoutY="105.0" prefHeight="200.0" prefWidth="451.0">
+         <children>
+            <TableView fx:id="tabell" layoutX="26.0" prefHeight="200.0" prefWidth="400.0">
+              <columns>
+                <TableColumn fx:id="colkinosal" prefWidth="75.0" text="Kinosalnr" />
+                <TableColumn fx:id="coldato" prefWidth="75.0" text="Dato" />
+                  <TableColumn fx:id="coltidspunkt" prefWidth="75.0" text="Tidspunkt" />
+                  <TableColumn fx:id="colpris" prefWidth="75.0" text="Pris" />
+                  <TableColumn fx:id="colfilm" prefWidth="75.0" text="Film" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <SplitMenuButton id="valg" layoutX="37.0" layoutY="57.0" mnemonicParsing="false" text="Visninger">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </SplitMenuButton>
+      <Button id="book" layoutX="141.0" layoutY="57.0" mnemonicParsing="false" text="Book" />
+      <Button id="tilbake" layoutX="402.0" layoutY="312.0" mnemonicParsing="false" onAction="#tilbakeKunde" text="Tilbake" />
+      <Button id="last" layoutX="38.0" layoutY="312.0" mnemonicParsing="false" onAction="#brukInnhold" text="Last innhold" />
+   </children>
+</AnchorPane>
