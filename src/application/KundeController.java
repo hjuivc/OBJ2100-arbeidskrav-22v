@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,6 +51,9 @@ public class KundeController {
 	
 	@FXML
 	private Button lastvalgtdato;
+	
+	@FXML
+	private Button lastvalgtfilm;
 	
 	@FXML
 	private DatePicker datovelger;
@@ -157,5 +161,56 @@ public class KundeController {
 		tabell.setItems(list);
 	}
 	
+	@FXML
+	public SplitMenuButton setMenyKnapp() throws Exception {
+		kontroll.lagForbindelse();
+		String sql = "SELECT f_filmnavn FROM tblfilm";
+		Statement utsagn = kontroll.forbindelse.createStatement();
+		ResultSet resultat = utsagn.executeQuery(sql);
+		try {
+	        while(resultat.next()) {
+	            String name = resultat.getString("f_filmnavn");
+	            MenuItem menuItem = new MenuItem(name);
+	            // add event handlers, etc, as needed..
+	            valg.getItems().add(menuItem);
+	        }
+	    } catch (SQLException e3) {System.out.println(e3);}
+		return valg;
+	}
 
+	public ObservableList<Kino> hentInnholdFilm() throws Exception {
+		ObservableList<Kino> data = FXCollections.observableArrayList();
+		kontroll.lagForbindelse();
+		SplitMenuButton film = setMenyKnapp();
+		System.out.println(valg);
+		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblvisning.f_filmnavn = '"+ film +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
+		Statement utsagn;
+        ResultSet resultat;
+		try {
+			utsagn = kontroll.forbindelse.createStatement();
+			resultat = utsagn.executeQuery(sql);
+			Kino kino;
+			while(resultat.next()) {
+				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"));
+                data.add(kino);
+                }
+		} catch (SQLException e2) {System.out.println(e2);}
+		return data;
+		
+	}
+	
+	        
+	
+	@FXML
+	public void brukInnholdFilm(ActionEvent e) throws Exception{
+		ObservableList<Kino> list = hentInnholdFilm();
+		colkinosal.setCellValueFactory(new PropertyValueFactory<Kino, Integer>("Kinosalnr"));
+		coldato.setCellValueFactory(new PropertyValueFactory<Kino, Date>("Dato"));
+		coltidspunkt.setCellValueFactory(new PropertyValueFactory<Kino, Time>("Starttid"));
+		colpris.setCellValueFactory(new PropertyValueFactory<Kino, Double>("Pris"));
+		colfilm.setCellValueFactory(new PropertyValueFactory<Kino, String>("Film"));
+		tabell.setItems(list);
+	
+	
+	}
 }
