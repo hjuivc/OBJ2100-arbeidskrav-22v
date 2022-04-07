@@ -44,15 +44,15 @@
             <Label layoutX="17.0" layoutY="91.0" text="Film" />
             <Label layoutX="2.0" layoutY="165.0" text="Tidspunkt" />
             <Label layoutX="10.0" layoutY="200.0" text="Kinosal" />
-            <TextField fx:id="bookFilm" layoutX="63.0" layoutY="87.0" prefHeight="25.0" prefWidth="66.0" />
+            <TextField fx:id="bookFilm" editable="false" layoutX="63.0" layoutY="87.0" mouseTransparent="true" prefHeight="25.0" prefWidth="66.0" />
             <Label layoutX="15.0" layoutY="132.0" text="Dato" />
-            <TextField fx:id="bookDato" layoutX="63.0" layoutY="128.0" prefHeight="25.0" prefWidth="66.0" />
-            <TextField fx:id="bookTidspunkt" layoutX="63.0" layoutY="161.0" prefHeight="25.0" prefWidth="66.0" />
-            <TextField fx:id="bookKinosal" layoutX="63.0" layoutY="199.0" prefHeight="25.0" prefWidth="66.0" />
+            <TextField fx:id="bookDato" editable="false" layoutX="63.0" layoutY="128.0" mouseTransparent="true" prefHeight="25.0" prefWidth="94.0" />
+            <TextField fx:id="bookTidspunkt" editable="false" layoutX="63.0" layoutY="161.0" mouseTransparent="true" prefHeight="25.0" prefWidth="66.0" />
+            <TextField fx:id="bookKinosal" editable="false" layoutX="63.0" layoutY="199.0" mouseTransparent="true" prefHeight="25.0" prefWidth="66.0" />
             <Label layoutX="195.0" layoutY="100.0" text="Antall billetter" />
             <Label layoutX="214.0" layoutY="141.0" text="Pris" />
             <TextField fx:id="bookAntall" layoutX="273.0" layoutY="96.0" prefHeight="25.0" prefWidth="26.0" />
-            <TextField fx:id="bookPris" layoutX="273.0" layoutY="141.0" prefHeight="25.0" prefWidth="66.0" />
+            <TextField fx:id="bookPris" editable="false" layoutX="273.0" layoutY="141.0" mouseTransparent="true" prefHeight="25.0" prefWidth="66.0" />
             <Button id="book" layoutX="285.0" layoutY="199.0" mnemonicParsing="false" text="Book" />
          </children>
       </AnchorPane>

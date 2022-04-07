@@ -26,6 +26,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
@@ -237,13 +238,12 @@ public class KundeController {
 
 	@FXML
 	public void test(MouseEvent e) throws Exception{
-		TableViewSelectionModel selectionModel = tabell.getSelectionModel();
-		selectionModel.setSelectionMode(SelectionMode.SINGLE);
-		ObservableList<Kino> listSelected = selectionModel.getSelectedItems();
-		System.out.println(listSelected.indexOf("dato"));
-		Kino[] kino1 = listSelected.get(0);
-		String kinonr = kino1.get(0);
-		System.out.println(kinonr);
+		Kino listSelected = tabell.getSelectionModel().getSelectedItem();
+		bookFilm.setText(listSelected.getFilm());
+		bookDato.setText(listSelected.getDato().toString());
+		bookTidspunkt.setText(listSelected.getStarttid().toString());
+		bookKinosal.setText(""+listSelected.getKinosalnr());
+
 		
 		
 
