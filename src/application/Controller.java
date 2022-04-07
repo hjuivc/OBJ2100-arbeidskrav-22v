@@ -127,16 +127,19 @@ public class Controller {
 	
 	
 	
-	@FXML
-	public void tilKunde(ActionEvent e) throws IOException {
-		Parent scene6Parent = FXMLLoader.load(getClass().getResource("scene6.fxml"));
+	public void tilKunde(ActionEvent e) throws Exception {
+		System.out.println("heihei");
+		FXMLLoader scene6Loader = FXMLLoader.load(getClass().getResource("scene6.fxml"));
+		Parent scene6Parent = scene6Loader.load();
+		KundeController kundecontroller = (KundeController) scene6Loader.getController();
 		Scene scene6 = new Scene(scene6Parent);
+		kundecontroller.brukInnhold(new ActionEvent());
 		
 		// Denne linja får Stage informasjonen
 		Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		
 		window.setScene(scene6);
-		window.show();
+		//window.show();
 	}
 	
 	

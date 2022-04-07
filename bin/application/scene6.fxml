@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.KundeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="818.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.KundeController">
    <children>
       <Label id="overskrift" layoutX="167.0" layoutY="14.0" text="Kundevindu">
          <font>
@@ -23,7 +19,7 @@
       </Label>
       <AnchorPane layoutX="10.0" layoutY="105.0" prefHeight="200.0" prefWidth="451.0">
          <children>
-            <TableView fx:id="tabell" layoutX="36.0" prefHeight="209.0" prefWidth="432.0">
+            <TableView fx:id="tabell" layoutX="36.0" onMouseClicked="#test" onSort="#test" prefHeight="209.0" prefWidth="432.0">
               <columns>
                 <TableColumn fx:id="colkinosal" prefWidth="75.0" text="Kinosalnr" />
                 <TableColumn fx:id="coldato" prefWidth="75.0" text="Dato" />
@@ -34,15 +30,32 @@
             </TableView>
          </children>
       </AnchorPane>
-      <SplitMenuButton id="valg" fx:id="valg" layoutX="37.0" layoutY="57.0" mnemonicParsing="false" onAction="#setMenyKnapp" text="Visninger">
-         <items>
-            <MenuItem fx:id="menyvalg" mnemonicParsing="false" text="Unspecified Action" />
-         </items></SplitMenuButton>
-      <Button id="book" layoutX="173.0" layoutY="57.0" mnemonicParsing="false" text="Book" />
       <Button id="tilbake" layoutX="421.0" layoutY="328.0" mnemonicParsing="false" onAction="#tilbakeKunde" text="Tilbake" />
-      <Button id="last" layoutX="37.0" layoutY="328.0" mnemonicParsing="false" onAction="#brukInnhold" text="Last innhold" />
-      <DatePicker id="datovelger" fx:id="datoValgt" layoutX="270.0" layoutY="57.0" onAction="#hentInnholdDato" />
+      <DatePicker id="datovelger" fx:id="datoValgt" layoutX="270.0" layoutY="57.0" onAction="#brukInnholdDato" />
       <Button id="lastvalgtdato" layoutX="149.0" layoutY="328.0" mnemonicParsing="false" onAction="#brukInnholdDato" text="Last valgt dato" />
-      <Button id="lastvalgtfilm" layoutX="285.0" layoutY="328.0" mnemonicParsing="false" onAction="#brukInnholdFilm" text="Last valgt film" />
+      <ChoiceBox id="valg" fx:id="valg" layoutX="86.0" layoutY="57.0" onAction="#brukInnholdFilm" prefWidth="150.0" />
+      <AnchorPane layoutX="33.0" layoutY="422.0" prefHeight="346.0" prefWidth="446.0">
+         <children>
+            <Label layoutX="158.0" layoutY="23.0" prefHeight="50.0" prefWidth="130.0" text="Booking">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="17.0" layoutY="91.0" text="Film" />
+            <Label layoutX="2.0" layoutY="165.0" text="Tidspunkt" />
+            <Label layoutX="10.0" layoutY="200.0" text="Kinosal" />
+            <TextField fx:id="bookFilm" layoutX="63.0" layoutY="87.0" prefHeight="25.0" prefWidth="66.0" />
+            <Label layoutX="15.0" layoutY="132.0" text="Dato" />
+            <TextField fx:id="bookDato" layoutX="63.0" layoutY="128.0" prefHeight="25.0" prefWidth="66.0" />
+            <TextField fx:id="bookTidspunkt" layoutX="63.0" layoutY="161.0" prefHeight="25.0" prefWidth="66.0" />
+            <TextField fx:id="bookKinosal" layoutX="63.0" layoutY="199.0" prefHeight="25.0" prefWidth="66.0" />
+            <Label layoutX="195.0" layoutY="100.0" text="Antall billetter" />
+            <Label layoutX="214.0" layoutY="141.0" text="Pris" />
+            <TextField fx:id="bookAntall" layoutX="273.0" layoutY="96.0" prefHeight="25.0" prefWidth="26.0" />
+            <TextField fx:id="bookPris" layoutX="273.0" layoutY="141.0" prefHeight="25.0" prefWidth="66.0" />
+            <Button id="book" layoutX="285.0" layoutY="199.0" mnemonicParsing="false" text="Book" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="33.0" layoutY="61.0" text="Velg film:" />
    </children>
 </AnchorPane>

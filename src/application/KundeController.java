@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,13 +19,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class KundeController {
@@ -35,7 +41,7 @@ public class KundeController {
 	private Label overskrift;
 	
 	@FXML
-	private SplitMenuButton valg;
+	private ChoiceBox<String> valg;
 	
 	@FXML
 	private Button book;
@@ -79,13 +85,30 @@ public class KundeController {
 	@FXML
 	private TableColumn<Kino, String> colfilm;
 	
+	@FXML
+	private TextField bookFilm;
+	
+	@FXML
+	private TextField bookDato;
+	
+	@FXML
+	private TextField bookTidspunkt;
+	
+	@FXML
+	private TextField bookKinosal;
+	
+	@FXML
+	private TextField bookAntall;
+	
+	@FXML
+	private TextField bookPris;
+	
 	public KundeController() {
 	}
 	
 	// Instansiering
 	@FXML
 	public void Initialize() {
-			
 	}
 	
 	@FXML
@@ -126,6 +149,7 @@ public class KundeController {
 		colpris.setCellValueFactory(new PropertyValueFactory<Kino, Double>("Pris"));
 		colfilm.setCellValueFactory(new PropertyValueFactory<Kino, String>("Film"));
 		tabell.setItems(list);
+
 	}
 	
 	public ObservableList<Kino> hentInnholdDato() throws Exception {
@@ -161,29 +185,12 @@ public class KundeController {
 		tabell.setItems(list);
 	}
 	
-	@FXML
-	public SplitMenuButton setMenyKnapp() throws Exception {
-		kontroll.lagForbindelse();
-		String sql = "SELECT f_filmnavn FROM tblfilm";
-		Statement utsagn = kontroll.forbindelse.createStatement();
-		ResultSet resultat = utsagn.executeQuery(sql);
-		try {
-	        while(resultat.next()) {
-	            String name = resultat.getString("f_filmnavn");
-	            MenuItem menuItem = new MenuItem(name);
-	            // add event handlers, etc, as needed..
-	            valg.getItems().add(menuItem);
-	        }
-	    } catch (SQLException e3) {System.out.println(e3);}
-		return valg;
-	}
 
 	public ObservableList<Kino> hentInnholdFilm() throws Exception {
 		ObservableList<Kino> data = FXCollections.observableArrayList();
 		kontroll.lagForbindelse();
-		SplitMenuButton film = setMenyKnapp();
-		System.out.println(valg);
-		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblvisning.f_filmnavn = '"+ film +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
+		String film = valg.getValue();
+		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblfilm.f_filmnavn = '"+ film +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
 		Statement utsagn;
         ResultSet resultat;
 		try {
@@ -213,4 +220,59 @@ public class KundeController {
 	
 	
 	}
+	
+	public void oppsettFilm() throws Exception{
+		kontroll.lagForbindelse();
+		String sql = "SELECT f_filmnavn FROM tblfilm";
+		Statement utsagn = kontroll.forbindelse.createStatement();
+		ResultSet resultat = utsagn.executeQuery(sql);
+		try {
+	        while(resultat.next()) {
+	            String name = resultat.getString("f_filmnavn");
+	            // add event handlers, etc, as needed..
+	            valg.getItems().add(name);
+	        }
+	    } catch (SQLException e3) {System.out.println(e3);}
+	}
+
+	@FXML
+	public void test(MouseEvent e) throws Exception{
+		TableViewSelectionModel selectionModel = tabell.getSelectionModel();
+		selectionModel.setSelectionMode(SelectionMode.SINGLE);
+		ObservableList<Kino> listSelected = selectionModel.getSelectedItems();
+		System.out.println(listSelected.indexOf("dato"));
+		Kino[] kino1 = listSelected.get(0);
+		String kinonr = kino1.get(0);
+		System.out.println(kinonr);
+		
+		
+
+	}
+
+	/*
+	   public void addTicketsToDatabase() throws SQLException {
+        for (Ticket t : newTicketsList) {
+            String sqlAddTickets = "INSERT INTO tblbillett VALUES(?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sqlAddTickets);
+            pstmt.setString(1, t.getTicketNumber());
+            pstmt.setInt(2, t.getShowingNumber());
+            pstmt.setInt(3, t.getIsPaid());
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void addSeatTicketsToDatabase() throws SQLException {
+        for (SeatTicket t : newSeatTicketList) {
+            String sqlAddSeatTickets = "INSERT INTO tblplassbillett VALUES(?, ?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sqlAddSeatTickets);
+            pstmt.setInt(1, t.getRowNr());
+            pstmt.setInt(2, t.getSeatNr());
+            pstmt.setInt(3, t.getMovieTheaterNumber());
+            pstmt.setString(4, t.getTicketCode());
+            pstmt.executeUpdate();
+        }
+    }*/
+
+
+
 }

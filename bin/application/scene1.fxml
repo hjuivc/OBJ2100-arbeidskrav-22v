@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="database" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HovedController">
+<AnchorPane id="database" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HovedController">
    <children>
       <Button id="planlegger" layoutX="98.0" layoutY="157.0" mnemonicParsing="false" onAction="#bytteVindu" text="Planlegger" />
       <Button id="betjening" layoutX="203.0" layoutY="157.0" mnemonicParsing="false" onAction="#tilBetjening" text="Betjening" />
@@ -16,7 +16,5 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button id="kobledatabase" layoutX="98.0" layoutY="213.0" mnemonicParsing="false" onAction="#hentForbindelse" text="Koble til databasen" />
-      <Button id="stengdatabase" layoutX="98.0" layoutY="261.0" mnemonicParsing="false" onAction="#stengForbindelse" text="Steng database" />
    </children>
 </AnchorPane>
