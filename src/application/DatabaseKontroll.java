@@ -11,17 +11,19 @@ import javafx.event.ActionEvent;
 
 public class DatabaseKontroll {
 	
-	private String databasenavn = "jdbc:mysql://localhost:8111/kino";
+	private String databasenavn = "jdbc:mysql://localhost:3306/kino";
 	private String databasedriver = "com.mysql.jdbc.Driver";
 	public Connection forbindelse;
 	private ResultSet resultat;
 	private Statement utsagn;
+
 	
 	
 	
 	
 	public void lagForbindelse() throws Exception {
 		try {
+			
 			forbindelse = DriverManager.getConnection(databasenavn, "root", "");
 			//System.out.println("Databasen er tilkoblet");
 		} catch(Exception e) {
