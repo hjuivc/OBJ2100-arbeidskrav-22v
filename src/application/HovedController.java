@@ -76,7 +76,6 @@ public class HovedController {
 	
 	@FXML
 	public void tilKunde(ActionEvent e) throws Exception {
-		System.out.println("heihei");
 		FXMLLoader scene6Loader = new FXMLLoader(getClass().getResource("scene6.fxml"));
 		Parent scene6Parent = scene6Loader.load();
 		KundeController kundecontroller = (KundeController) scene6Loader.getController();
