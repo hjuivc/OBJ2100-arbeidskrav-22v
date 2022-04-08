@@ -9,10 +9,13 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -31,6 +34,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -104,6 +108,9 @@ public class KundeController {
 	@FXML
 	private TextField bookPris;
 	
+	@FXML
+	private Label bookText;
+	
 	public KundeController() {
 	}
 	
@@ -124,7 +131,7 @@ public class KundeController {
 	public ObservableList<Kino> hentInnhold() throws Exception {
 		ObservableList<Kino> data = FXCollections.observableArrayList();
 		kontroll.lagForbindelse();
-		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
+		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn, tblvisning.v_visningnr FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
 		Statement utsagn;
         ResultSet resultat;
         
@@ -133,7 +140,7 @@ public class KundeController {
 			resultat = utsagn.executeQuery(sql);
 			Kino kino;
 			while(resultat.next()) {
-				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"));
+				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"), resultat.getInt("v_visningnr"));
                 data.add(kino);
                 }
 		} catch (SQLException e) {System.out.println(e);}  
@@ -157,7 +164,7 @@ public class KundeController {
 		ObservableList<Kino> data = FXCollections.observableArrayList();
 		kontroll.lagForbindelse();
 		dato = datoValgt.getValue();
-		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblvisning.v_dato = '"+ dato +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
+		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn, tblvisning.v_visningnr FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblvisning.v_dato = '"+ dato +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
 		Statement utsagn;
         ResultSet resultat;
 		try {
@@ -165,7 +172,7 @@ public class KundeController {
 			resultat = utsagn.executeQuery(sql);
 			Kino kino;
 			while(resultat.next()) {
-				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"));
+				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"), resultat.getInt("v_visningnr"));
                 data.add(kino);
                 }
 		} catch (SQLException e2) {System.out.println(e2);}
@@ -191,7 +198,7 @@ public class KundeController {
 		ObservableList<Kino> data = FXCollections.observableArrayList();
 		kontroll.lagForbindelse();
 		String film = valg.getValue();
-		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblfilm.f_filmnavn = '"+ film +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
+		String sql = "SELECT tblvisning.v_kinosalnr, tblvisning.v_dato, tblvisning.v_starttid, tblvisning.v_pris, tblfilm.f_filmnavn, tblvisning.v_visningnr FROM tblvisning, tblfilm WHERE tblvisning.v_filmnr = tblfilm.f_filmnr AND tblfilm.f_filmnavn = '"+ film +"' ORDER BY tblvisning.v_dato ASC, tblvisning.v_starttid ASC";
 		Statement utsagn;
         ResultSet resultat;
 		try {
@@ -199,7 +206,7 @@ public class KundeController {
 			resultat = utsagn.executeQuery(sql);
 			Kino kino;
 			while(resultat.next()) {
-				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"));
+				kino = new Kino(resultat.getInt("v_kinosalnr"), resultat.getDate("v_dato"), resultat.getTime("v_starttid"), resultat.getDouble("v_pris"), resultat.getString("f_filmnavn"), resultat.getInt("v_visningnr"));
                 data.add(kino);
                 }
 		} catch (SQLException e2) {System.out.println(e2);}
@@ -244,35 +251,48 @@ public class KundeController {
 		bookTidspunkt.setText(listSelected.getStarttid().toString());
 		bookKinosal.setText(""+listSelected.getKinosalnr());
 
-		
-		
 
 	}
+	
+	@FXML
+	public final EventHandler<ActionEvent> kalkulerPris() throws Exception {
+		Kino listSelected = tabell.getSelectionModel().getSelectedItem();
+		int antall=Integer.parseInt(bookAntall.getText());  
+		bookPris.setText(""+(listSelected.getPris()*antall));
 
-	/*
-	   public void addTicketsToDatabase() throws SQLException {
-        for (Ticket t : newTicketsList) {
-            String sqlAddTickets = "INSERT INTO tblbillett VALUES(?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(sqlAddTickets);
-            pstmt.setString(1, t.getTicketNumber());
-            pstmt.setInt(2, t.getShowingNumber());
-            pstmt.setInt(3, t.getIsPaid());
-            pstmt.executeUpdate();
-        }
-    }
-
-    public void addSeatTicketsToDatabase() throws SQLException {
-        for (SeatTicket t : newSeatTicketList) {
-            String sqlAddSeatTickets = "INSERT INTO tblplassbillett VALUES(?, ?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(sqlAddSeatTickets);
-            pstmt.setInt(1, t.getRowNr());
-            pstmt.setInt(2, t.getSeatNr());
-            pstmt.setInt(3, t.getMovieTheaterNumber());
-            pstmt.setString(4, t.getTicketCode());
-            pstmt.executeUpdate();
-        }
-    }*/
-
-
+		
+		return null;
+	}
+	
+	@FXML
+	public void bookBilletter(ActionEvent e) throws Exception {
+		kontroll.lagForbindelse();
+		
+		char[] bokstav = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+		        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+		        'Y', 'Z'};
+	    char[] billettnr=new char[5];
+	    Random random=new Random();
+	    for (int i = 0; i < 5; i++) {
+	    	billettnr[i]=bokstav[random.nextInt(bokstav.length)];
+	    }
+	    Kino listSelected = tabell.getSelectionModel().getSelectedItem();
+	    
+	    String billettnr2= new String (billettnr);  
+	   
+	    // Ny variant på å gi brukeren plass på kino. Sparer tid for alle
+	    int setenr = ThreadLocalRandom.current().nextInt(1, 20 + 1);
+	    int radnr = ThreadLocalRandom.current().nextInt(1, 15 + 1);
+	    Statement utsagn = kontroll.forbindelse.createStatement();
+	    String sql = "INSERT INTO tblbillett VALUES('"+ billettnr2 +"'," + listSelected.getVisningnr() + ", 0)";
+	    utsagn.executeUpdate(sql);
+	    String sql2 = "INSERT INTO tblplassbillett VALUES ("+ radnr + "," + setenr + "," + listSelected.getKinosalnr() + ",'"+ billettnr2 + "')";
+		utsagn.executeUpdate(sql2);
+		
+		bookText.setText("Booket!");
+	}
+		
+		
 
 }
+
