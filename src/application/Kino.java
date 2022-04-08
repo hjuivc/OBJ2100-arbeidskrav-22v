@@ -9,13 +9,15 @@ public class Kino {
 	private Time starttid;
 	private double pris;
 	private String film;
+	private int visningnr;
 	
-	public Kino(int kinosalnr, Date dato, Time starttid, double pris, String film) {
+	public Kino(int kinosalnr, Date dato, Time starttid, double pris, String film, int visningnr) {
 		this.kinosalnr = kinosalnr;
 		this.dato = dato;
 		this.starttid = starttid;
 		this.pris = pris;
 		this.film = film;
+		this.visningnr = visningnr;
 	}
 
 	public int getKinosalnr() {
@@ -57,11 +59,19 @@ public class Kino {
 	public void setFilm(String film) {
 		this.film = film;
 	}
+	
+	public int getVisningnr() {
+		return visningnr;
+	}
+
+	public void setVisningnr(int visningnr) {
+		this.visningnr = visningnr;
+	}
 
 	@Override
 	public String toString() {
 		return "Kino [kinosalnr=" + kinosalnr + ", dato=" + dato + ", starttid=" + starttid + ", pris=" + pris
-				+ ", film=" + film + "]";
+				+ ", film=" + film + ", visningnr=" + visningnr + "]";
 	}
 	
 	
